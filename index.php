@@ -7,13 +7,35 @@
  */
 $sUri = $_SERVER['REQUEST_URI'];
 $aUri = explode('/', trim($sUri , '/'));
+require ('functions.php');
 
-
-$sName = '               NAME                ';
-$sName = trim($sName);
+//$sName = '               NAME                ';
+//$sName = trim($sName);
 //var_dump($_SERVER);
-var_dump($aUri);
-var_dump($sName);
+//var_dump($aUri);
+//var_dump($sName);
+
+$sController = 'home';
+
+////////////
+/*
+if (!empty($_GET['page'])) {
+    $sController = $_GET['page'];}
+
+else {
+    $sController = 'home';
+};
+
+$sFileName = './page/' . basename($sController) . '.php';
+
+if (!file_exists($sFileName)){
+$sFileName = './page/404.php';
+}
+$sFileName = getController($_GET['page']);
+
+
+require ($sFileName);
+///////////
 
 
 
@@ -22,4 +44,16 @@ if ($aUri[0] === 'skillogram' && empty($_GET)) {
 } elseif (isset($_GET['page'])) {
     require ('pages/' . $_GET['page'] . '.php');
 }
+*/
+
+//$sFileName = getController($_GET['page']);
+//require ($sFileName);
+/////////////////////////////////////////////////////////////////
+
+
+//incrementCounterSimple();
+incrementCounter();
+var_dump(incrementCounter());
+
+
 
