@@ -14,6 +14,44 @@ var_dump($stmt->fetch(PDO::FETCH_ASSOC)); //1 string fetch()
 var_dump($stmt->fetch(PDO::FETCH_ASSOC));
 var_dump($stmt->fetch(PDO::FETCH_ASSOC));
 
+
+if (!is_numeric($_GET['author_id'])) {
+    exit('die');            //проверка на число (как  вариант)
+}
+
+$stmt = $dbh->query('
+    INSERT INTO post
+    SET
+        author_id = ' . $_GET['author_id'] . ',
+        photo = "image.jpg",
+        created_at = "' . date('Y-m-d H:i:s') . '"
+');
+
+
+
+$dbh->beginTransaction();
+// а теперь!
+////вернет объект запроса, сам запрос не идет
+
+$stmt = $dbh->prepare('
+    INSERT INTO post
+    SET
+        author_id = ?,
+        photo = ?,
+        created_at = ?,
+');
+
+$stmt->execute([
+        $_GET['author_id'],
+        'image.jpg',
+        date('Y-m-d H:i:s'),
+]);
+//$dbh->commit();
+$dbh->rollBack();
+
+
+
+
 //2
 $stmt = $dbh->query('SELECT * FROM post ORDER by id DESC '); //DESC в обратном порядке
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
